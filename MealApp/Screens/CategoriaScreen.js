@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Button, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
 import { CATEGORIES } from '../data/dummy-data';
 import CategoryGrid from '../Components/CategoryGrid';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -39,7 +39,7 @@ CategoriaScreen.navigationOptions = navData => {
         return (
             <HeaderButtons HeaderButtonComponent={HeaderButton}  > 
             <Item  
-            title ="Menucito" 
+            title ="Menu" 
             iconName="ios-menu"
             onPress = {() =>{
                 navData.navigation.toggleDrawer();

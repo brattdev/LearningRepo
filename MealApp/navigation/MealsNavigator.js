@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, Text } from 'react-native';
 import { createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import CategoriaScreen from '../Screens/CategoriaScreen';
@@ -11,7 +11,6 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import FavoritoScreen from '../Screens/FavoritoScreen';
 import { Ionicons } from '@expo/vector-icons';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
-//import {} from 'react-native-paper';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 
 const defaultStackNavOptions = {
@@ -63,7 +62,13 @@ const tabScreenConfig = {
       tabBarIcon: tabInfo => {
         return <Ionicons name="ios-star" size={25} color={tabInfo.tintColor} />;
       },
-      tabBarColor: Colors.tercero
+      tabBarColor: Colors.tercero,
+      tabBarLabel:
+        Platform.OS === 'android' ? (
+          <Text style={{ fontFamily: 'open-sans-bold' }}>Favs!</Text>
+        ) : (
+          'Favorites'
+        )
     }
   }
 };
@@ -84,12 +89,37 @@ const MealsFavTabNavigator =
         }
       });
 
-FiltersNavigator = createStackNavigator ({
-    Filters : FiltroScreen});
 
-const MainNavigator = createDrawerNavigator ({
-    MealsFav: MealsFavTabNavigator,
-    Filters :FiltersNavigator
-});
+const FiltersNavigator = createStackNavigator(
+  {
+    Filters: FiltroScreen
+  },
+  {
+    // navigationOptions: {
+    //   drawerLabel: 'Filters!!!!'
+    // },
+    defaultNavigationOptions: defaultStackNavOptions
+  }
+);
 
-export default createAppContainer(MealsFavTabNavigator);
+const MainNavigator = createDrawerNavigator(
+  {
+    MealsFavs: {
+      screen: MealsFavTabNavigator,
+      navigationOptions: {
+        drawerLabel: 'Meals'
+      }
+    },
+    Filters: FiltersNavigator
+  },
+  {
+    contentOptions: {
+      activeTintColor: Colors.accentColor,
+      labelStyle: {
+        fontFamily: 'open-sans-bold'
+      }
+    }
+  }
+);
+
+export default createAppContainer(MainNavigator);
