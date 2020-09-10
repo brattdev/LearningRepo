@@ -4,17 +4,15 @@ import
   Text, 
   Image, 
   StyleSheet, 
-  Button,
   TouchableOpacity,
   TouchableNativeFeedback,
   Platform 
 } from 'react-native';
 
-import Colors from '../../constants/Colors';
 
 const ProductItem = props => {
   let TouchableCmp = TouchableOpacity;
-  if ( Platform.OS === 'android' &&Platform.Version >=21 ) {
+  if ( Platform.OS === 'android' && Platform.Version >=21 ) {
     TouchableCmp = TouchableNativeFeedback;
   }
   return (  
@@ -32,16 +30,7 @@ const ProductItem = props => {
         <Text style={Estilo.price}>${props.price.toFixed(2)}</Text>
       </View>
       <View style={Estilo.actions}>
-        <Button
-          color={Colors.turquesa}
-          title="Detalle"
-          onPress={props.onViewDetail}
-        />
-        <Button
-          color={Colors.turquesa}
-          title="Al carrito"
-          onPress={props.onAddToCart}
-        />
+        {props.children}
       </View>
       </View>
       </TouchableCmp>
@@ -75,7 +64,7 @@ const Estilo = StyleSheet.create({
   },
   details: {
     alignItems: 'center',
-    height: '15%',
+    height: '17%',
     padding: 10
   },
   title: {
@@ -92,7 +81,7 @@ const Estilo = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: '25%',
+    height: '23%',
     paddingHorizontal: 20
   },
   touchable : {
