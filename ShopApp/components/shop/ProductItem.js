@@ -8,7 +8,7 @@ import
   TouchableNativeFeedback,
   Platform 
 } from 'react-native';
-
+import Card from '../UI/Card';
 
 const ProductItem = props => {
   let TouchableCmp = TouchableOpacity;
@@ -16,7 +16,7 @@ const ProductItem = props => {
     TouchableCmp = TouchableNativeFeedback;
   }
   return (  
-    <View style={Estilo.product}>
+    <Card style={Estilo.product}>
       <View style={Estilo.touchable} >   
       <TouchableCmp  
     onPress={props.onViewDetail}
@@ -35,7 +35,7 @@ const ProductItem = props => {
       </View>
       </TouchableCmp>
       </View>
-    </View>  
+    </Card>  
   );
 };
 

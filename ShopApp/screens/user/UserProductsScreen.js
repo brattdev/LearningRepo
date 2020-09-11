@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Button, Platform } from 'react-native';
+import { FlatList, Button, Platform, Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
@@ -12,10 +12,22 @@ const UserProductsScreen = props => {
   const userProducts = useSelector(state => state.products.userProducts);
   const dispatch = useDispatch();
 
+
   const editProductHandler = id => {
     props.navigation.navigate('EditProduct', { productId: id });
   };
-
+  const deleteHandler = (id) => {
+    Alert.alert('Borrar el producto', 'Seguro que quieres borrarlo??', [
+      { text: 'NO', style: 'default' },
+      {
+        text: 'SI',
+        style: 'destructive',
+        onPress: () => {
+          dispatch(productsActions.deleteProduct(id));
+        }
+      }
+    ]);
+  };
   return (
     <FlatList
       data={userProducts}
@@ -38,10 +50,8 @@ const UserProductsScreen = props => {
           />
           <Button
             color={Colors.turquesa}
-            title="Delete"
-            onPress={() => {
-              dispatch(productsActions.deleteProduct(itemData.item.id));
-            }}
+            title="Borrar"
+            onPress={deleteHandler.bind(this, itemData.item.id)}
           />
         </ProductItem>
       )}
@@ -52,7 +62,8 @@ const UserProductsScreen = props => {
 UserProductsScreen.navigationOptions = navData => {
   return {
     headerTitle: 'Mis Productos',
-    headerLeft: (
+    headerLeft: () => { 
+      return (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Menu"
@@ -62,8 +73,9 @@ UserProductsScreen.navigationOptions = navData => {
           }}
         />
       </HeaderButtons>
-    ),
-    headerRight: (
+    )},
+    headerRight: () => {
+      return (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Añadir"
@@ -74,6 +86,7 @@ UserProductsScreen.navigationOptions = navData => {
         />
       </HeaderButtons>
     )
+        }
   };
 };
 
